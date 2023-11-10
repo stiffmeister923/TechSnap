@@ -4,6 +4,10 @@ import json
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/detect', methods=['POST'])
 def detect_objects():
     try:
@@ -20,6 +24,8 @@ def detect_objects():
 
         # Check for a successful response
         response.raise_for_status()
+
+        return render_template('nextpage.html', result=response.json())
 
         # Return the API response to the user
         return jsonify(response.json())
